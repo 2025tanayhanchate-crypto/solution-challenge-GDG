@@ -1,0 +1,94 @@
+Build a full-stack web application called "SahaayX" — a Smart Resource Allocation & Volunteer Coordination platform for Social Impact. This must be hackathon-winning, look like a real government-grade official app (think UMANG / DigiLocker level polish), with glassmorphism + Google Gemini + Claude AI dual-powered intelligence.
+
+=============================================
+TECH STACK
+=============================================
+Frontend: HTML5 + CSS3 + Vanilla JS
+Backend: Node.js + Express.js
+Database: SQLite (better-sqlite3)
+Auth: JWT (30min expiry) + bcrypt passwords
+AI Layer 1: Google Gemini 2.0 Flash (via @google/generative-ai SDK) — primary conversational AI
+AI Layer 2: Anthropic Claude claude-sonnet-4-20250514 (via @anthropic-ai/sdk) — smart matching engine
+Voice: Web Speech API (SpeechRecognition + SpeechSynthesis)
+i18n: i18next
+Charts: Chart.js 4.x
+Maps: Leaflet.js + OpenStreetMap tiles
+Animations: GSAP 3 + CSS keyframes
+Icons: Lucide (CDN unpkg)
+PDF Export: jsPDF + html2canvas
+QR Codes: qrcode.js (for volunteer ID cards)
+
+=============================================
+DESIGN SYSTEM — "OFFICIAL APP" RULES
+=============================================
+This must look like a real government/enterprise app, NOT a startup toy.
+Study UMANG App, DigiLocker, India Stack, and GOV.UK Design System for reference.
+
+Official App Visual Rules:
+1. NO pure black backgrounds. Use deep navy #0D1B2A as base dark.
+2. Every page has a clear HEADER BAR with:
+   - Left: SahaayX logo (SVG inline) + Ministry/NGO seal placeholder
+   - Center: Page title in official typography
+   - Right: Language switcher + notifications + user avatar + logout
+3. SIDEBAR: 72px wide collapsed, 240px expanded. White/navy. Official icons only.
+4. TYPOGRAPHY:
+   - Headings: 'Mukta' (Google Font) — supports all Indian scripts
+   - Body: 'DM Sans' 
+   - Data/Numbers: 'JetBrains Mono' for stats
+   - Import all three from Google Fonts
+5. COLOR SYSTEM (official government palette meets modern tech):
+   --brand-primary: #1B4FE8     (official blue — trustworthy)
+   --brand-secondary: #00C896   (action green — impact)
+   --brand-accent: #FF5722      (alert orange — urgency)
+   --brand-gold: #F4B942        (achievement gold — badges)
+   --bg-dark: #0D1B2A           (deep navy — authority)
+   --bg-card: rgba(255,255,255,0.06)
+   --bg-surface: rgba(13,27,42,0.8)
+   --glass-border: rgba(255,255,255,0.12)
+   --text-primary: #F0F4FF
+   --text-secondary: #9BACC8
+   --success: #00E676
+   --warning: #FFB300
+   --danger: #FF3D3D
+   --info: #00B4D8
+6. OFFICIAL SEALS: Add a placeholder emblem (SVG circle with Ashoka Chakra-inspired design) next to the logo on all official-facing portals (Political, Police, Government).
+7. FOOTER on every page: "Powered by Google Gemini · Anthropic Claude | Built for Social Impact | © 2025 SahaayX | CERT-IN Compliant Notice | Data Privacy Policy"
+8. All forms must have fieldset + legend structure (accessibility standard).
+9. Status badges must use pill shape with border, never just color fills.
+10. All tables: striped rows, sticky header, sortable columns.
+
+GLASSMORPHISM (applied on top of official structure):
+  Cards and modals:
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+
+Animated background (all pages):
+  CSS: 3 large blurred orbs (400px each) slowly rotating in background
+  JS Canvas: subtle mesh grid with moving dots (opacity 0.15)
+  NO harsh flashing — this is official, calm, authoritative
+
+=============================================
+GOOGLE AI STUDIO / GEMINI INTEGRATION
+=============================================
+Package: @google/generative-ai
+Model: gemini-2.0-flash
+API Key: store as GEMINI_API_KEY in .env
+
+FEATURE 1 — Gemini Community Needs Analyzer (Academic Portal)
+  Endpoint: POST /api/gemini/analyze-survey
+  Input: CSV data (community survey) as text
+  Prompt to Gemini:
+    "You are a social welfare data analyst. Analyze this community survey data and return a JSON with: top5_needs (array of {category, severity 1-10, affected_population, recommended_action}), overall_risk_level (Low/Medium/High/Critical), key_insights (3 bullet points), priority_districts (array of strings). Data: [CSV_DATA]"
+  Output: Parsed JSON → renders as animated card grid on frontend
+  UI: Show "Analyzing with Gemini..." shimmer loader → then reveal cards with GSAP stagger
+
+FEATURE 2 — Gemini Real-Time Chatbot Assistant (All Portals)
+  Implement a floating chat bubble (bottom-left, distinct from voice mic bottom-right)
+  Button: Gemini logo G icon with gradient, pulsing
+  Chat window: glassmorphism panel, 380px wide, slides up
+  Title: "SahaayX Assistant · Powered by Gemini"
+  System prompt: "You are Sah...
